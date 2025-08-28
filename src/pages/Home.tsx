@@ -590,7 +590,8 @@ return (
 key={index}
 className={`absolute inset-0 transition-opacity duration-1000 z-0 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
 >
-<div className="absolute inset-0 bg-gradient-to-r from-navy-900/30 via-navy-800/20 to-navy-700/15 dark:from-gray-900/30 dark:via-gray-800/20 dark:to-gray-700/15 z-10" />
+<div className="absolute inset-0 bg-gradient-to-r from-navy-900/95 via-navy-800/85 to-navy-700/75 dark:from-gray-900/95 dark:via-gray-800/85 dark:to-gray-700/75 z-10" />
+
 
 
 {media.type === 'video' ? (
