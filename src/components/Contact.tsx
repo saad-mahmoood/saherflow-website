@@ -146,9 +146,9 @@ const Contact: React.FC = () => {
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="p-3 bg-yellow-500 rounded-full">
+              {/* <div className="p-3 bg-yellow-500 rounded-full">
                 <HelpCircle className="w-6 h-6 text-navy-900" />
-              </div>
+              </div> */}
               <h2 className="text-4xl font-bold text-navy-900 dark:text-white">Frequently Asked Questions</h2>
             </div>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
