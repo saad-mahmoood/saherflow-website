@@ -139,12 +139,7 @@ const Careers: React.FC = () => {
     }));
   };
 
-  const submitApplication = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Submit to Formspree using handleSubmit directly
-    await handleSubmit(e);
-  };
+
 
   // Reset form after successful submission
   React.useEffect(() => {

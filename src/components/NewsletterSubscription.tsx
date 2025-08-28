@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, Send, CheckCircle, AlertCircle, Bell, Users, TrendingUp } from 'lucide-react';
 import { EmailService, validateEmailJSConfig } from '../utils/emailService';
-import { SubscriberStorage } from '../utils/subscriberStorage';
+
 
 interface NewsletterSubscriptionProps {
   variant?: 'default' | 'compact' | 'footer';
@@ -38,34 +38,14 @@ const NewsletterSubscription: React.FC<NewsletterSubscriptionProps> = ({
     setErrorMessage('');
 
     try {
-      // Store subscriber locally
-      const subscriberAdded = SubscriberStorage.addSubscriber({
-        email: email.trim(),
-        preferences: {
-          productUpdates: true,
-          industryNews: true,
-          technicalPapers: true,
-          events: true
-        }
-      });
-      
-      if (!subscriberAdded) {
-        throw new Error('Failed to store subscriber information');
-      }
-
-      // Send welcome email to subscriber
-      const welcomeEmailSent = await EmailService.sendWelcomeEmail(email.trim());
-      
-      if (!welcomeEmailSent) {
-        throw new Error('Failed to send welcome email. Please check your EmailJS configuration.');
-      }
+ 
 
       // Success
       setSubmitStatus('success');
       setEmail('');
 
       console.log('Subscription successful for:', email.trim());
-      console.log('Total subscribers:', SubscriberStorage.getSubscriberCount());
+      // console.log('Total subscribers:', SubscriberStorage.getSubscriberCount());
     } catch (error) {
       console.error('Subscription error:', error);
       setErrorMessage(error instanceof Error ? error.message : 'Failed to subscribe. Please try again.');

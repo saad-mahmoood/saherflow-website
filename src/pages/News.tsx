@@ -3,7 +3,7 @@ import { Calendar, ArrowRight, Tag, Award, Users, TrendingUp, Building, X, Chevr
 import { loadAllNews, getNewsCategories, getNewsByCategory, NewsArticle } from '../utils/newsLoader';
 import SEOHead from '../components/SEOHead';
 import NewsletterSubscription from '../components/NewsletterSubscription';
-import { NewsNotificationService } from '../utils/newsNotificationService';
+
 
 // SEO Component for structured data
 const NewsStructuredData: React.FC<{ articles: NewsArticle[] }> = ({ articles }) => {
@@ -74,8 +74,7 @@ const News: React.FC = () => {
           }
         }
         
-        // Check for new articles and notify subscribers
-        await NewsNotificationService.checkAndNotifyNewArticles(newsArticles);
+ 
         
       } catch (err) {
         console.error('Error loading news:', err);
@@ -106,8 +105,7 @@ const News: React.FC = () => {
             setFilteredArticles(newsArticles);
           }
           
-          // Check for new articles and notify subscribers
-          await NewsNotificationService.checkAndNotifyNewArticles(newsArticles);
+     
         }
       } catch (err) {
         console.error('Error refreshing news:', err);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Calendar, ArrowRight, Tag, User, Clock, Search, Filter, Share2, Eye, BookOpen, TrendingUp, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { loadAllBlogs, getBlogCategories, getBlogTags, getBlogsByCategory, getBlogsByTag, searchBlogs, BlogArticle } from '../utils/blogLoader';
 import SEOHead from '../components/SEOHead';
-import { AutoNotificationService } from '../utils/autoNotificationService';
+
 
 // SEO Component for structured data
 const BlogStructuredData: React.FC<{ articles: BlogArticle[] }> = ({ articles }) => {
@@ -78,8 +78,7 @@ const Blogs: React.FC = () => {
           }
         }
         
-        // Trigger auto-notification check
-        AutoNotificationService.checkForNewContent();
+    
         
       } catch (err) {
         console.error('Error loading blogs:', err);
