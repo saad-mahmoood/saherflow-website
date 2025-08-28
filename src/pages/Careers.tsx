@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 import { MapPin, Briefcase, Clock, Users, Award, Zap } from 'lucide-react';
-import SEOHead from '../components/SEOHead';
 
 const Careers: React.FC = () => {
-  const [state, handleSubmit] = useForm("xldwenjz"); // JobApplication - SFS endpoint
+  const [state, handleSubmit] = useForm("mnnzrdzo");
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [applicationData, setApplicationData] = useState({
     name: '',
@@ -139,7 +138,12 @@ const Careers: React.FC = () => {
     }));
   };
 
-
+  const submitApplication = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Submit to Formspree using handleSubmit directly
+    await handleSubmit(e);
+  };
 
   // Reset form after successful submission
   React.useEffect(() => {
@@ -158,35 +162,6 @@ const Careers: React.FC = () => {
   }, [state.succeeded]);
 
   return (
-    <>
-      <SEOHead
-        title="Careers | Join Our Team in Saudi Arabia | Saher Flow Solutions"
-        description="Join Saher Flow Solutions team in Thuwal, Saudi Arabia. Exciting opportunities in flow measurement technology, engineering, and innovation. Be part of Vision 2030."
-        keywords="careers Saudi Arabia, jobs Thuwal, KAUST jobs, flow measurement careers, engineering jobs Saudi Arabia, Vision 2030 jobs, oil gas careers, technology jobs KSA"
-        url="/careers"
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "JobPosting",
-          "title": "Multiple Positions Available",
-          "description": "Join our innovative team developing cutting-edge flow measurement technology",
-          "hiringOrganization": {
-            "@type": "Organization",
-            "name": "Saher Flow Solutions",
-            "sameAs": "https://saherflow.com"
-          },
-          "jobLocation": {
-            "@type": "Place",
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Thuwal",
-              "addressRegion": "Makkah Province",
-              "addressCountry": "SA"
-            }
-          },
-          "employmentType": "FULL_TIME",
-          "industry": "Oil and Gas Technology"
-        }}
-      />
     <section id="careers" className="py-24 dark:bg-gray-900 pt-32">
       {/* Header */}
       <div className="bg-gradient-to-r from-navy-900 to-navy-800 dark:from-gray-800 dark:to-gray-700 text-white py-16">
@@ -667,7 +642,6 @@ const Careers: React.FC = () => {
         </div>
       )}
     </section>
-    </>
   );
 };
 

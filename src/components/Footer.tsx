@@ -12,8 +12,7 @@ import {
   Users,
   Settings,
   MessageCircle,
-  CheckCircle,
-  Facebook
+  CheckCircle
 } from 'lucide-react';
 import NewsletterSubscription from './NewsletterSubscription';
 
@@ -22,7 +21,6 @@ const Footer: React.FC = () => {
   const quickLinks = [
     { name: 'About Us', href: '/' },
     { name: 'DMOR Technology', href: '/' },
-    { name: 'Expert Blog', href: '/blogs' },
     { name: 'Case Studies', href: '/news' },
     { name: 'Support Center', href: '/contact' },
     { name: 'Product Catalog', href: 'https://saherflow.com/wp-content/uploads/2025/01/Saher-Products-Broucher-2025-01.pdf', external: true },
@@ -40,7 +38,6 @@ const Footer: React.FC = () => {
 
   const resources = [
     { name: 'Product Brochures', href: '/products' },
-    { name: 'Technology Blog', href: '/blogs' },
     { name: 'Technical Papers', href: '/news' },
     { name: 'Webinars & Events', href: '/news' },
     { name: 'Industry Insights', href: '/news' },
@@ -74,15 +71,16 @@ const Footer: React.FC = () => {
                 <div>
                   <p className="text-gray-300 font-medium">Headquarters</p>
                   <p className="text-gray-400 text-sm">
-                    KAUST, Office 2112, Olayan Building 40 King Abdulla University of Science and Technology, Thuwal 23955, Saudi Arabia
+                    King Abdullah University of Science and Technology (KAUST)<br />
+                    Building 1, Office 2204, Thuwal 23955, Saudi Arabia
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone size={20} className="text-yellow-500 flex-shrink-0" />
                 <div>
-                  <a href="tel:+966542862009" className="text-gray-300 hover:text-white transition-colors">
-                    +966 54 286 2009
+                  <a href="tel:+966128080900" className="text-gray-300 hover:text-white transition-colors">
+                    +966 12 808 0900
                   </a>
                   <p className="text-gray-400 text-sm">Sun-Thu 8:00 AM - 5:00 PM AST</p>
                 </div>
@@ -101,7 +99,7 @@ const Footer: React.FC = () => {
             {/* Social Links */}
             <div className="flex gap-4 pt-4">
               <a 
-                href="https://www.linkedin.com/company/saherflow" 
+                href="https://linkedin.com/company/saherflow" 
                 className="p-3 bg-white/10 rounded-lg hover:bg-yellow-500 hover:text-navy-900 transition-all duration-300 group"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -109,7 +107,7 @@ const Footer: React.FC = () => {
                 <Linkedin size={20} />
               </a>
               <a 
-                href="https://www.youtube.com/watch?v=KmRtSAURurM" 
+                href="https://youtube.com/saherflow" 
                 className="p-3 bg-white/10 rounded-lg hover:bg-yellow-500 hover:text-navy-900 transition-all duration-300 group"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -117,12 +115,12 @@ const Footer: React.FC = () => {
                 <Youtube size={20} />
               </a>
               <a 
-                href="https://www.facebook.com/people/Saher-Flow-Solutions/100086522580571/" 
+                href="https://twitter.com/saherflow" 
                 className="p-3 bg-white/10 rounded-lg hover:bg-yellow-500 hover:text-navy-900 transition-all duration-300 group"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Facebook size={20} />
+                <Twitter size={20} />
               </a>
             </div>
           </div>
@@ -174,7 +172,7 @@ const Footer: React.FC = () => {
         <div className="container mx-auto px-6 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-gray-400 text-center md:text-left">
-              <p>&copy; 2025 Saher Flow Solutions. All rights reserved.</p>
+              <p>&copy; 2024 Saher Flow Solutions. All rights reserved.</p>
               <p className="text-sm mt-1">Innovating flow measurement technology from Saudi Arabia for the world</p>
             </div>
             
@@ -182,6 +180,7 @@ const Footer: React.FC = () => {
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
               <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Accessibility</a>
             </div>
           </div>
           
@@ -209,10 +208,10 @@ const Footer: React.FC = () => {
                   <span>CE Compliant</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 bg-white/20 rounded border border-white/30 flex items-center justify-center">
-                    <span className="text-xs font-bold">KSA</span>
+                  <div className="w-8 h-8 bg-green-600/30 rounded border border-green-500/30 flex items-center justify-center">
+                    <span className="text-xs font-bold text-green-400">KSA</span>
                   </div>
-                  <span>Made in Saudia Arabia</span>
+                  <span className="text-green-400">Made in Saudi Arabia</span>
                 </div>
               </div>
 

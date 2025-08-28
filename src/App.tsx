@@ -1,13 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Services from './pages/Services';
 import News from './pages/News';
-import Blogs from './pages/Blogs';
 import Careers from './pages/Careers';
 
 import Contact from './components/Contact';
@@ -27,28 +25,27 @@ const ScrollToTop: React.FC = () => {
 
 function App() {
   return (
-    <HelmetProvider>
-      <NavigationProvider>
-        <Router>
-          <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-            <Navbar />
-            <ScrollToTop />
-            <main>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="/news" element={<News />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/careers" element={<Careers />} />
-                <Route path="/contact" element={<Contact />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
-        </Router>
-      </NavigationProvider>
-    </HelmetProvider>
+    <NavigationProvider>
+      <Router>
+        <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+          <Navbar />
+          <ScrollToTop />
+          <main>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/products" element={<Products />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/news" element={<News />} />
+              <Route path="/careers" element={<Careers />} />
+           
+    
+              <Route path="/contact" element={<Contact />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </NavigationProvider>
   );
 }
 

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, ArrowRight, Tag, Award, Users, TrendingUp, Building, X, ChevronLeft, ChevronRight, Clock, Eye, Share2, AlertCircle } from 'lucide-react';
 import { loadAllNews, getNewsCategories, getNewsByCategory, NewsArticle } from '../utils/newsLoader';
-import SEOHead from '../components/SEOHead';
 import NewsletterSubscription from '../components/NewsletterSubscription';
-
+import { NewsNotificationService } from '../utils/newsNotificationService';
 
 // SEO Component for structured data
 const NewsStructuredData: React.FC<{ articles: NewsArticle[] }> = ({ articles }) => {
@@ -74,7 +73,8 @@ const News: React.FC = () => {
           }
         }
         
- 
+        // Check for new articles and notify subscribers
+        await NewsNotificationService.checkAndNotifyNewArticles(newsArticles);
         
       } catch (err) {
         console.error('Error loading news:', err);
@@ -105,7 +105,8 @@ const News: React.FC = () => {
             setFilteredArticles(newsArticles);
           }
           
-     
+          // Check for new articles and notify subscribers
+          await NewsNotificationService.checkAndNotifyNewArticles(newsArticles);
         }
       } catch (err) {
         console.error('Error refreshing news:', err);
@@ -231,35 +232,6 @@ const News: React.FC = () => {
 
   return (
     <>
-      <SEOHead
-        title="Latest News & Updates | Saher Flow Solutions"
-        description="Stay updated with latest news from Saher Flow Solutions. Saudi Aramco pre-qualification, field trials, awards, partnerships, and breakthrough developments in multiphase flow measurement."
-        keywords="Saher Flow news, Saudi Aramco pre-qualified, multiphase flow meter news, oil gas technology news, DMOR technology updates, flow measurement industry news"
-        url="/news"
-        structuredData={{
-          "@context": "https://schema.org",
-          "@type": "Blog",
-          "name": "Saher Flow Solutions News",
-          "description": "Latest news and updates from Saher Flow Solutions",
-          "url": "https://saherflow.com/news",
-          "publisher": {
-            "@type": "Organization",
-            "name": "Saher Flow Solutions"
-          },
-          "blogPost": articles.slice(0, 5).map(article => ({
-            "@type": "BlogPosting",
-            "headline": article.title,
-            "description": article.excerpt,
-            "image": article.image,
-            "datePublished": article.date,
-            "url": `https://saherflow.com/news#${article.slug}`,
-            "author": {
-              "@type": "Organization",
-              "name": "Saher Flow Solutions"
-            }
-          }))
-        }}
-      />
       <NewsStructuredData articles={articles} />
       
       {/* SEO Meta Tags */}
@@ -271,25 +243,25 @@ const News: React.FC = () => {
 
       <section id="news" className="pt-20 bg-gray-50 dark:bg-gray-900 min-h-screen">
         {/* Hero Header */}
-        <div className="relative bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-white py-16 sm:py-20 lg:py-24 overflow-hidden">
+        <div className="relative bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-white py-24 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
           <div className="container mx-auto px-6 relative z-10">
             <div className="max-w-4xl">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                 Latest News & 
                 <span className="block text-yellow-400">Industry Insights</span>
               </h1>
-              <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 leading-relaxed mb-6 sm:mb-8">
+              <p className="text-xl lg:text-2xl text-gray-300 leading-relaxed">
                 Stay updated with breakthrough developments, partnerships, and innovations from Saher Flow Solutions
               </p>
-              <div className="flex items-center gap-4 sm:gap-6">
+              <div className="flex items-center gap-6 mt-8">
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5 text-yellow-400" />
-                  <span className="text-gray-300 text-sm sm:text-base">Updated Daily</span>
+                  <span className="text-gray-300">Updated Daily</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Eye className="w-5 h-5 text-yellow-400" />
-                  <span className="text-gray-300 text-sm sm:text-base">{articles.length} Articles</span>
+                  <span className="text-gray-300">{articles.length} Articles</span>
                 </div>
               </div>
             </div>
@@ -525,7 +497,7 @@ const News: React.FC = () => {
               <div className="p-6 lg:p-8">
                 {/* Article Content */}
                 <div 
-                  className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-navy-900 dark:prose-headings:text-white prose-a:text-navy-600 dark:prose-a:text-yellow-400 prose-strong:text-navy-900 dark:prose-strong:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300"
+                  className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-navy-900 dark:prose-headings:text-white prose-a:text-navy-600 dark:prose-a:text-yellow-400 prose-strong:text-navy-900 dark:prose-strong:text-white"
                   dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
                 />
                 <style jsx>{`
@@ -559,10 +531,7 @@ const News: React.FC = () => {
                     margin-bottom: 1.5rem;
                     font-size: 1.1rem;
                     line-height: 1.8;
-                    color: #374151 !important;
-                  }
-                  .dark .prose p {
-                    color: #d1d5db !important;
+                    color: #374151;
                   }
                   .prose ul, .prose ol {
                     margin: 1.5rem 0;
@@ -572,10 +541,6 @@ const News: React.FC = () => {
                     margin-bottom: 0.75rem;
                     font-size: 1.1rem;
                     line-height: 1.7;
-                    color: #374151 !important;
-                  }
-                  .dark .prose li {
-                    color: #d1d5db !important;
                   }
                   .prose blockquote {
                     border-left: 4px solid #ffd500;
@@ -642,20 +607,20 @@ const News: React.FC = () => {
                   .dark .prose h1,
                   .dark .prose h2,
                   .dark .prose h3 {
-                    color: white !important;
+                    color: white;
+                  }
+                  .dark .prose p {
+                    color: #d1d5db;
                   }
                   .dark .prose blockquote {
                     background: #374151;
-                    color: #f9fafb !important;
+                    color: #f9fafb;
                   }
                   .dark .prose th {
                     background: #374151;
                   }
                   .dark .prose tr:nth-child(even) {
                     background: #374151;
-                  }
-                  .dark .prose td {
-                    color: #d1d5db !important;
                   }
                   .dark .prose code {
                     background: #374151;

@@ -1,120 +1,130 @@
-// EmailJS service for contact form only
+// Simple EmailJS service for newsletter subscriptions
 import emailjs from '@emailjs/browser';
 
-// EmailJS Configuration
-const EMAILJS_SERVICE_ID = 'service_78g1aha';
-const EMAILJS_TEMPLATE_ID_CONTACT = 'template_zodftxu'; // Admin notification
-const EMAILJS_TEMPLATE_ID_AUTO_REPLY = 'template_fqz6jme'; // User auto-reply
-const EMAILJS_PUBLIC_KEY = 'YlRIA-4TEOH3k-NgJ';
+// EmailJS Configuration - You'll replace these with your actual values
+const EMAILJS_SERVICE_ID = 'service_azqbh9e';
+const EMAILJS_TEMPLATE_ID_WELCOME = 'template_8ex3j33';
+const EMAILJS_TEMPLATE_ID_ARTICLE = 'template_e4oorbp';
+const EMAILJS_PUBLIC_KEY = '8tFc9GCXL3OfQUv5c';
 
 // Initialize EmailJS
 emailjs.init(EMAILJS_PUBLIC_KEY);
 
 export class EmailService {
   /**
-   * Send contact form submission to admin and auto-reply to user
+   * Send welcome email to new subscriber
    */
-  static async sendContactForm(formData: {
-    name: string;
-    email: string;
-    department: string;
-    message: string;
-    phone?: string;
-  }): Promise<{ success: boolean; error?: string }> {
+  static async sendWelcomeEmail(subscriberEmail: string): Promise<boolean> {
+    const firstName = subscriberEmail.split('@')[0];
+
+    const templateParams = {
+      email: subscriberEmail,
+      to_name: firstName,
+      from_name: 'Saher Flow Solutions',
+      subscriber_name: firstName,
+      company_name: 'Saher Flow Solutions',
+      website_url: window.location.origin,
+    };
+
     try {
-      // Template parameters for admin notification
-      const adminTemplateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        department: formData.department,
-        message: formData.message,
-        phone: formData.phone || 'Not provided',
-      };
-
-      // Template parameters for user auto-reply
-      const userTemplateParams = {
-        to_name: formData.name,
-        to_email: formData.email,
-        user_message: formData.message,
-        department: formData.department,
-      };
-
-      console.log('Sending admin notification with params:', adminTemplateParams);
-      console.log('Sending user auto-reply with params:', userTemplateParams);
-
-      // Send admin notification
-      const adminResponse = await emailjs.send(
+      console.log('Sending welcome email to:', subscriberEmail);
+      const response = await emailjs.send(
         EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID_CONTACT,
-        adminTemplateParams
+        EMAILJS_TEMPLATE_ID_WELCOME,
+        templateParams
       );
-
-      console.log('Admin notification sent successfully:', adminResponse);
-
-      // Send user auto-reply
-      const userResponse = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID_AUTO_REPLY,
-        userTemplateParams
-      );
-
-      console.log('User auto-reply sent successfully:', userResponse);
-
-      return { 
-        success: adminResponse?.status === 200 && userResponse?.status === 200 
-      };
+      console.log('Welcome email sent successfully:', response);
+      return response?.status === 200;
     } catch (error) {
-      console.error('Failed to send contact form:', error);
-      
-      // More detailed error logging
-      if (error && typeof error === 'object' && 'text' in error) {
-        console.error('EmailJS Error Details:', error.text);
-      }
-      
-      return { 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Failed to send email. Please check your EmailJS configuration.' 
-      };
+      console.error('Failed to send welcome email:', error);
+      return false;
     }
   }
 
   /**
-   * Send welcome email to new subscriber (placeholder for newsletter functionality)
+   * Send new article notification to subscriber
    */
-  static async sendWelcomeEmail(email: string): Promise<boolean> {
-    console.log('Welcome email functionality not implemented yet for:', email);
-    return true; // Return true to avoid breaking the newsletter subscription flow
+  static async sendArticleNotification(
+    subscriberEmail: string,
+    articleTitle: string,
+    articleExcerpt: string,
+    articleUrl: string
+  ): Promise<boolean> {
+    const firstName = subscriberEmail.split('@')[0];
+    const fullArticleUrl = `${window.location.origin}${articleUrl}`;
+
+    const templateParams = {
+      email: subscriberEmail,
+      to_name: firstName,
+      from_name: 'Saher Flow Solutions',
+      subscriber_name: firstName,
+      article_title: articleTitle,
+      article_excerpt: articleExcerpt,
+      article_url: fullArticleUrl,
+      company_name: 'Saher Flow Solutions',
+      website_url: window.location.origin,
+    };
+
+    try {
+      console.log('Sending article notification to:', subscriberEmail);
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID_ARTICLE,
+        templateParams
+      );
+      console.log('Article notification sent successfully:', response);
+      return response?.status === 200;
+    } catch (error) {
+      console.error('Failed to send article notification:', error);
+      return false;
+    }
   }
 
   /**
-   * Notify subscribers about new article (placeholder for newsletter functionality)
-   */
-  static async notifySubscribersNewArticle(article: {
-    title: string;
-    excerpt: string;
-    url: string;
-    type: 'news' | 'blog';
-  }): Promise<{ success: number; failed: number }> {
-    console.log('Article notification functionality not implemented yet for:', article.title);
-    return { success: 0, failed: 0 }; // Return empty result to avoid breaking the notification flow
-  }
-
-  /**
-   * Notify all subscribers (placeholder for newsletter functionality)
+   * Notify all subscribers about new article
    */
   static async notifyAllSubscribers(
-    title: string,
-    excerpt: string,
-    url: string,
+    articleTitle: string,
+    articleExcerpt: string,
+    articleUrl: string,
     subscriberEmails: string[],
-    author: string,
-    publishedDate: string
+    fromName: string = 'Saher Flow Solutions Team',
+    publishedDate: string = new Date().toLocaleDateString()
   ): Promise<{ success: number; failed: number }> {
-    console.log('Bulk notification functionality not implemented yet for:', title);
-    return { success: 0, failed: 0 }; // Return empty result to avoid breaking the notification flow
+    let success = 0;
+    let failed = 0;
+
+    console.log(`Notifying ${subscriberEmails.length} subscribers about new article:`, articleTitle);
+
+    for (const email of subscriberEmails) {
+      try {
+        const sent = await this.sendArticleNotification(
+          email,
+          articleTitle,
+          articleExcerpt,
+          articleUrl
+        );
+        
+        if (sent) {
+          success++;
+        } else {
+          failed++;
+        }
+        
+        // Add small delay to avoid rate limiting
+        await new Promise(resolve => setTimeout(resolve, 200));
+      } catch (error) {
+        console.error(`Failed to notify subscriber ${email}:`, error);
+        failed++;
+      }
+    }
+
+    console.log(`Notification complete: ${success} successful, ${failed} failed`);
+    return { success, failed };
   }
 }
 
 export const validateEmailJSConfig = (): boolean => {
-  return !!(EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID_CONTACT && EMAILJS_TEMPLATE_ID_AUTO_REPLY && EMAILJS_PUBLIC_KEY);
+  // Since you're using your actual credentials, always return true
+  return true;
 };
