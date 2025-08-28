@@ -116,15 +116,12 @@ const Navbar: React.FC = () => {
                   ? <Sun size={20} className="text-yellow-400" />
                   : <Moon size={20} className="text-gray-600" />}
               </button>
-
-<Link
-  to="/contact"
-  onClick={() => setIsMobileMenuOpen(false)}
-  className="mx-auto mt-4 inline-flex items-center justify-center px-5 py-3 bg-navy-900 dark:bg-yellow-500 text-white dark:text-navy-900 rounded-lg font-medium text-base max-w-xs"
->
-  Contact Us
-</Link>
-
+              <Link
+                to="/contact"
+                className="hidden sm:inline-flex bg-navy-900 dark:bg-yellow-500 text-white dark:text-navy-900 px-3 py-2 sm:px-4 sm:py-2 rounded-lg font-medium hover:bg-navy-800 dark:hover:bg-yellow-400 transition-colors text-sm sm:text-base"
+              >
+                Contact Us
+              </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(open => !open)}
                 className="sm:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
