@@ -21,7 +21,6 @@ const Footer: React.FC = () => {
 
   const quickLinks = [
     { name: 'About Us', href: '/' },
-    { name: 'DMOR Technology', href: '/' },
     { name: 'Expert Blog', href: '/blogs' },
     { name: 'Case Studies', href: '/news' },
     { name: 'Support Center', href: '/contact' },
@@ -65,7 +64,7 @@ const Footer: React.FC = () => {
             
             <p className="text-gray-300 leading-relaxed text-lg">
               Leading provider of real-time multiphase flow measurement solutions for the oil and gas industry. 
-              Our revolutionary DMOR technology delivers 24/7 trusted measurements without calibration.
+              Our revolutionary DMOR technology delivers 24/7 trusted measurements with minimal calibration requirement.
             </p>
 
             <div className="space-y-4">
@@ -107,22 +106,6 @@ const Footer: React.FC = () => {
                 rel="noopener noreferrer"
               >
                 <Linkedin size={20} />
-              </a>
-              <a 
-                href="https://www.youtube.com/watch?v=KmRtSAURurM" 
-                className="p-3 bg-white/10 rounded-lg hover:bg-yellow-500 hover:text-navy-900 transition-all duration-300 group"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Youtube size={20} />
-              </a>
-              <a 
-                href="https://www.facebook.com/people/Saher-Flow-Solutions/100086522580571/" 
-                className="p-3 bg-white/10 rounded-lg hover:bg-yellow-500 hover:text-navy-900 transition-all duration-300 group"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Facebook size={20} />
               </a>
             </div>
           </div>
@@ -208,6 +191,18 @@ const Footer: React.FC = () => {
                   </div>
                   <span>CE Compliant</span>
                 </div>
+           <div className="flex items-center gap-2">
+  <div className="w-8 h-8  rounded border border-white/30 flex items-center justify-center overflow-hidden">
+    <img
+      src="https://res.cloudinary.com/drnak5yb2/image/upload/v1756467074/WhatsApp_Image_2025-08-28_at_20.36.54_4cca8ab0_gzgchd.jpg"
+      alt="IECEx/ATEX logo"
+      loading="lazy"
+      className="w-6 h-6 object-contain"
+    />
+  </div>
+  <span>IECEx/ATEX certified</span>
+</div>
+
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-white/20 rounded border border-white/30 flex items-center justify-center">
                     <span className="text-xs font-bold">KSA</span>
