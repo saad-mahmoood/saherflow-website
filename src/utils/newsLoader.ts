@@ -1,5 +1,13 @@
 // Dynamic news loader utility to load markdown files from content directory
+
+// Polyfill Node Buffer in browser (gray-matter expects Buffer)
+import { Buffer } from 'buffer';
+if (typeof (globalThis as any).Buffer === 'undefined') {
+  (globalThis as any).Buffer = Buffer;
+}
+
 import { marked } from 'marked';
+import matter from 'gray-matter'; // robust frontmatter parser
 
 export interface NewsMetadata {
   id?: string;
@@ -23,36 +31,16 @@ marked.setOptions({
   gfm: true,
 });
 
-// Parse frontmatter from markdown
+// Parse frontmatter from markdown using gray-matter
 function parseFrontmatter(markdown: string): { metadata: NewsMetadata; content: string } {
-  const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
-  const match = markdown.match(frontmatterRegex);
-  
-  if (!match) {
-    throw new Error('Invalid frontmatter format');
-  }
+  // Defensive: strip BOM if present
+  const cleaned = markdown.replace(/^\uFEFF/, '');
+  const parsed = matter(cleaned, { language: 'yaml' });
 
-  const [, frontmatterStr, content] = match;
-  
-  // Simple YAML parser for our needs
-  const metadata: any = {};
-  frontmatterStr.split('\n').forEach(line => {
-    const [key, ...valueParts] = line.split(':');
-    if (key && valueParts.length > 0) {
-      let value = valueParts.join(':').trim();
-      // Remove quotes if present
-      if (value.startsWith('"') && value.endsWith('"')) {
-        value = value.slice(1, -1);
-      }
-      // Handle boolean values
-      if (value === 'true') value = true;
-      if (value === 'false') value = false;
-      
-      metadata[key.trim()] = value;
-    }
-  });
+  const metadata = parsed.data as unknown as NewsMetadata;
+  const content = (parsed.content || '').trim();
 
-  return { metadata: metadata as NewsMetadata, content: content.trim() };
+  return { metadata, content };
 }
 
 // Generate slug from filename

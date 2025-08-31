@@ -518,6 +518,24 @@ education: 'MBA in Operations Management',
 },
 {
 id: 12,
+name: 'Faizan Asif',
+role: 'Junior Embedded Design Engineer',
+location: 'Lahore, Pakistan',
+image: '',
+description: 'Electrical and Electronics Engineer specializing in embedded systems, firmware development, and digital design.',
+longDescription: 'Saad Mahmood is a software engineer at Saher Flow Solutions with a passion for building high-performance, maintainable, and user-centric applications. He brings hands-on experience in mobile and web development using Flutter, React, Node.js/Express, MongoDB, and PostgreSQL. Skilled in REST API design, third-party integrations, and end-to-end feature development, Saad has contributed to diverse projects, from Android apps at Lalaland.pk to backend API systems at DHA Lahore. He also has teaching experience in computer science and holds IBM certifications in DevOps, Cloud, Agile, and Full Stack Development. His approach emphasizes clean coding, scalability, and effective cross-functional collaboration within Agile environments.',
+expertise: [
+'Embedded Systems Development',
+'Firmware Programming',
+'Digital System Design',
+],
+achievements: [
+
+],
+education: ''
+},
+{
+id: 13,
 name: 'Saad Mahmood',
 role: 'Software Engineer',
 location: 'Lahore, Pakistan',
@@ -525,10 +543,9 @@ image: 'https://res.cloudinary.com/drnak5yb2/image/upload/v1754639157/saad-profi
 description: 'Full-stack software engineer specializing in scalable, user-focused web and mobile applications using Flutter, React, Node.js, and modern databases.',
 longDescription: 'Saad Mahmood is a software engineer at Saher Flow Solutions with a passion for building high-performance, maintainable, and user-centric applications. He brings hands-on experience in mobile and web development using Flutter, React, Node.js/Express, MongoDB, and PostgreSQL. Skilled in REST API design, third-party integrations, and end-to-end feature development, Saad has contributed to diverse projects, from Android apps at Lalaland.pk to backend API systems at DHA Lahore. He also has teaching experience in computer science and holds IBM certifications in DevOps, Cloud, Agile, and Full Stack Development. His approach emphasizes clean coding, scalability, and effective cross-functional collaboration within Agile environments.',
 expertise: [
-'Flutter & React',
-'Node.js / Express',
-'MongoDB & PostgreSQL',
+'MERN & Flutter',
 'REST API Development',
+'Software Architecture',
 'Agile Development Practices'
 ],
 achievements: [

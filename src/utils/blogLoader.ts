@@ -1,5 +1,13 @@
-// Dynamic blog loader utility to load markdown files from blogs directory
+// Dynamic blog loader utility to load markdown files from blogs directory 
+
+// Polyfill Node Buffer in browser (gray-matter expects Buffer)
+import { Buffer } from 'buffer';
+if (typeof (globalThis as any).Buffer === 'undefined') {
+  (globalThis as any).Buffer = Buffer;
+}
+
 import { marked } from 'marked';
+import matter from 'gray-matter'; // gray-matter parses YAML frontmatter reliably
 
 export interface BlogMetadata {
   id?: string;
@@ -9,7 +17,7 @@ export interface BlogMetadata {
   authorTitle: string;
   authorImage: string;
   category: string;
-  tags: string[];
+  tags: string[]; 
   image: string;
   excerpt: string;
   readTime: string;
@@ -30,40 +38,18 @@ marked.setOptions({
   gfm: true,
 });
 
-// Parse frontmatter from markdown
+// Parse frontmatter from markdown using gray-matter (robust)
 function parseFrontmatter(markdown: string): { metadata: BlogMetadata; content: string } {
-  const frontmatterRegex = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/;
-  const match = markdown.match(frontmatterRegex);
-  
-  if (!match) {
-    throw new Error('Invalid frontmatter format');
-  }
+  // Remove BOM if present (defensive)
+  const cleaned = markdown.replace(/^\uFEFF/, '');
 
-  const [, frontmatterStr, content] = match;
-  
-  // Simple YAML parser for our needs
-  const metadata: any = {};
-  frontmatterStr.split('\n').forEach(line => {
-    const [key, ...valueParts] = line.split(':');
-    if (key && valueParts.length > 0) {
-      let value = valueParts.join(':').trim();
-      // Remove quotes if present
-      if (value.startsWith('"') && value.endsWith('"')) {
-        value = value.slice(1, -1);
-      }
-      // Handle arrays (tags)
-      if (value.startsWith('[') && value.endsWith(']')) {
-        value = value.slice(1, -1).split(',').map(item => item.trim().replace(/"/g, ''));
-      }
-      // Handle boolean values
-      if (value === 'true') value = true;
-      if (value === 'false') value = false;
-      
-      metadata[key.trim()] = value;
-    }
-  });
+  // gray-matter handles CRLF/LF/BOM/arrays/booleans/quoted strings properly
+  const parsed = matter(cleaned, { language: 'yaml' });
 
-  return { metadata: metadata as BlogMetadata, content: content.trim() };
+  const metadata = parsed.data as unknown as BlogMetadata;
+  const content = (parsed.content || '').trim();
+
+  return { metadata, content };
 }
 
 // Generate slug from filename
@@ -115,6 +101,7 @@ export async function loadAllBlogs(): Promise<BlogArticle[]> {
         id: metadata.id || slug,
       });
     } catch (error) {
+      // Keep the helpful filename + error log (existing behavior)
       console.error(`Error loading blog file ${filePath}:`, error);
     }
   }
