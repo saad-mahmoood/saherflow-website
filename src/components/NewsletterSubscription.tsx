@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Send, CheckCircle, AlertCircle, Bell, Users, TrendingUp } from 'lucide-react';
-import { EmailService, validateEmailJSConfig } from '../utils/emailService';
+import { useNotifications } from './NotificationSystem';
 
 
 interface NewsletterSubscriptionProps {
@@ -12,59 +12,65 @@ const NewsletterSubscription: React.FC<NewsletterSubscriptionProps> = ({
   variant = 'default',
   className = '' 
 }) => {
+  const { addNotification } = useNotifications();
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubscriptionSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!email.trim()) {
-      setErrorMessage('Please enter a valid email address');
-      setSubmitStatus('error');
+      addNotification({
+        type: 'error',
+        title: 'Invalid Email',
+        message: 'Please enter a valid email address.',
+        duration: 4000
+      });
       return;
     }
 
-    // Check if EmailJS is configured
-    if (!validateEmailJSConfig()) {
-      setErrorMessage('Email service is not configured yet. Please update your EmailJS credentials in src/utils/emailService.ts');
-      setSubmitStatus('error');
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      addNotification({
+        type: 'error',
+        title: 'Invalid Email Format',
+        message: 'Please enter a valid email address format.',
+        duration: 4000
+      });
       return;
     }
 
     setIsSubmitting(true);
-    setSubmitStatus('idle');
-    setErrorMessage('');
 
     try {
- 
-
-      // Success
-      setSubmitStatus('success');
+      // Simulate backend maintenance
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      addNotification({
+        type: 'warning',
+        title: 'Newsletter Maintenance',
+        message: 'Our newsletter system is temporarily under maintenance. Please email us at contact@saherflow.com to subscribe manually.',
+        duration: 8000,
+        action: {
+          label: 'Send Email',
+          onClick: () => window.open(`mailto:contact@saherflow.com?subject=Newsletter Subscription&body=Please subscribe ${email.trim()} to your newsletter.`)
+        }
+      });
+      
       setEmail('');
-
-      console.log('Subscription successful for:', email.trim());
-      // console.log('Total subscribers:', SubscriberStorage.getSubscriberCount());
     } catch (error) {
       console.error('Subscription error:', error);
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to subscribe. Please try again.');
-      setSubmitStatus('error');
+      addNotification({
+        type: 'error',
+        title: 'Subscription Failed',
+        message: 'Failed to subscribe. Please try again or contact us directly.',
+        duration: 6000
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  // Reset status after 5 seconds
-  React.useEffect(() => {
-    if (submitStatus !== 'idle') {
-      const timer = setTimeout(() => {
-        setSubmitStatus('idle');
-        setErrorMessage('');
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [submitStatus]);
 
   if (variant === 'compact') {
     return (
@@ -86,14 +92,6 @@ const NewsletterSubscription: React.FC<NewsletterSubscriptionProps> = ({
             {isSubmitting ? '...' : 'Subscribe'}
           </button>
         </form>
-        
-        {submitStatus === 'success' && (
-          <p className="text-green-400 text-sm mt-2">✅ Subscribed successfully!</p>
-        )}
-        
-        {submitStatus === 'error' && (
-          <p className="text-red-400 text-sm mt-2">❌ {errorMessage}</p>
-        )}
       </div>
     );
   }
@@ -149,34 +147,6 @@ const NewsletterSubscription: React.FC<NewsletterSubscriptionProps> = ({
             </>
           )}
         </button>
-        
-        {submitStatus === 'success' && (
-          <div className="bg-green-100 dark:bg-green-900/30 border border-green-500/30 rounded-lg p-4 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <CheckCircle size={20} className="text-green-600 dark:text-green-400" />
-              <p className="text-green-800 dark:text-green-400 font-medium">
-                Successfully Subscribed!
-              </p>
-            </div>
-            <p className="text-green-700 dark:text-green-300 text-sm">
-              Thank you for subscribing! Check your email for a welcome message.
-            </p>
-          </div>
-        )}
-        
-        {submitStatus === 'error' && (
-          <div className="bg-red-100 dark:bg-red-900/30 border border-red-500/30 rounded-lg p-4 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <AlertCircle size={20} className="text-red-600 dark:text-red-400" />
-              <p className="text-red-800 dark:text-red-400 font-medium">
-                {errorMessage || 'Subscription Failed'}
-              </p>
-            </div>
-            <p className="text-red-700 dark:text-red-300 text-sm">
-              Please try again or contact us directly at contact@saherflow.com
-            </p>
-          </div>
-        )}
       </form>
 
       {/* Trust Indicators */}

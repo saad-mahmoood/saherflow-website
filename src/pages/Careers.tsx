@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useForm, ValidationError } from '@formspree/react';
 import { MapPin, Briefcase, Clock, Users, Award, Zap } from 'lucide-react';
+import { useNotifications } from '../components/NotificationSystem';
 import SEOHead from '../components/SEOHead';
 
 const Careers: React.FC = () => {
-  const [state, handleSubmit] = useForm("xldwenjz"); // JobApplication - SFS endpoint
+  const { addNotification } = useNotifications();
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [applicationData, setApplicationData] = useState({
     name: '',
@@ -139,11 +139,41 @@ const Careers: React.FC = () => {
     }));
   };
 
+  const submitApplication = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!applicationData.name.trim() || !applicationData.email.trim() || !applicationData.coverLetter.trim()) {
+      addNotification({
+        type: 'error',
+        title: 'Missing Information',
+        message: 'Please fill in all required fields before submitting your application.',
+        duration: 5000
+      });
+      return;
+    }
 
+    setIsSubmitting(true);
 
-  // Reset form after successful submission
-  React.useEffect(() => {
-    if (state.succeeded) {
+    try {
+      // Simulate backend maintenance
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      addNotification({
+        type: 'warning',
+        title: 'Application System Maintenance',
+        message: 'Our job application system is temporarily under maintenance. Please email your resume directly to career@saherflow.com with your application details.',
+        duration: 10000,
+        action: {
+          label: 'Open Email',
+          onClick: () => {
+            const subject = `Job Application: ${applicationData.position}`;
+            const body = `Dear Saher Flow Team,\n\nI am interested in applying for the ${applicationData.position} position.\n\nName: ${applicationData.name}\nEmail: ${applicationData.email}\nPhone: ${applicationData.phone}\nExperience: ${applicationData.experience}\nLocation: ${applicationData.location}\n\nCover Letter:\n${applicationData.coverLetter}\n\nPlease find my resume attached.\n\nBest regards,\n${applicationData.name}`;
+            window.open(`mailto:career@saherflow.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+          }
+        }
+      });
+      
+      // Reset form
       setApplicationData({ 
         name: '', 
         email: '', 
@@ -154,8 +184,21 @@ const Careers: React.FC = () => {
         experience: '',
         location: ''
       });
+      
+    } catch (error) {
+      console.error('Application error:', error);
+      addNotification({
+        type: 'error',
+        title: 'Application Failed',
+        message: 'There was an error submitting your application. Please try again or email us directly.',
+        duration: 6000
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-  }, [state.succeeded]);
+  };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
     <>
@@ -457,10 +500,6 @@ const Careers: React.FC = () => {
               </div>
 
               <form onSubmit={submitApplication} className="space-y-6" >
-                {/* Hidden fields for Formspree */}
-                <input type="hidden" name="_subject" value={`Job Application: ${applicationData.position} - ${applicationData.name}`} />
-                <input type="hidden" name="_template" value="table" />
-                
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -475,12 +514,6 @@ const Careers: React.FC = () => {
                       placeholder="Your full name"
                       required
                     />
-                    <ValidationError 
-                      prefix="Name" 
-                      field="name"
-                      errors={state.errors}
-                      className="text-red-500 text-sm mt-1"
-                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -494,12 +527,6 @@ const Careers: React.FC = () => {
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-navy-500 dark:focus:ring-yellow-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="your.email@company.com"
                       required
-                    />
-                    <ValidationError 
-                      prefix="Email" 
-                      field="email"
-                      errors={state.errors}
-                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
                 </div>
@@ -517,12 +544,6 @@ const Careers: React.FC = () => {
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-navy-500 dark:focus:ring-yellow-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="+966 XX XXX XXXX"
                     />
-                    <ValidationError 
-                      prefix="Phone" 
-                      field="phone"
-                      errors={state.errors}
-                      className="text-red-500 text-sm mt-1"
-                    />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -535,12 +556,6 @@ const Careers: React.FC = () => {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-navy-500 dark:focus:ring-yellow-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                       placeholder="e.g., 5+ years"
-                    />
-                    <ValidationError 
-                      prefix="Experience" 
-                      field="experience"
-                      errors={state.errors}
-                      className="text-red-500 text-sm mt-1"
                     />
                   </div>
                 </div>
@@ -569,12 +584,6 @@ const Careers: React.FC = () => {
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-navy-500 dark:focus:ring-yellow-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     placeholder="City, Country"
                   />
-                  <ValidationError 
-                    prefix="Location" 
-                    field="location"
-                    errors={state.errors}
-                    className="text-red-500 text-sm mt-1"
-                  />
                 </div>
 
                 <div>
@@ -590,12 +599,6 @@ const Careers: React.FC = () => {
                     placeholder="Tell us why you're perfect for this role and your interest in working in Saudi Arabia..."
                     required
                   />
-                  <ValidationError 
-                    prefix="Cover Letter" 
-                    field="coverLetter"
-                    errors={state.errors}
-                    className="text-red-500 text-sm mt-1"
-                  />
                 </div>
 
                 <div>
@@ -609,12 +612,6 @@ const Careers: React.FC = () => {
                     className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-navy-500 dark:focus:ring-yellow-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                     required
                   />
-                  <ValidationError 
-                    prefix="Resume" 
-                    field="resume"
-                    errors={state.errors}
-                    className="text-red-500 text-sm mt-1"
-                  />
                   <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                     Accepted formats: PDF, DOC, DOCX (Max 10MB)
                   </p>
@@ -623,10 +620,10 @@ const Careers: React.FC = () => {
                 <div className="flex gap-4 pt-4">
                   <button 
                     type="submit"
-                    disabled={state.submitting}
+                    disabled={isSubmitting}
                     className="flex-1 bg-navy-900 dark:bg-yellow-500 text-white dark:text-navy-900 py-4 rounded-lg font-semibold hover:bg-navy-800 dark:hover:bg-yellow-400 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {state.submitting ? 'Submitting...' : 'Submit Application'}
+                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
                   </button>
                   <button 
                     type="button"
@@ -645,22 +642,6 @@ const Careers: React.FC = () => {
                     Cancel
                   </button>
                 </div>
-                
-                {state.succeeded && (
-                  <div className="bg-green-100 dark:bg-green-900/30 border border-green-500/30 rounded-lg p-4 text-center">
-                    <p className="text-green-800 dark:text-green-400 font-medium">
-                      ✅ Application submitted successfully! We'll review your application and get back to you within 5 business days.
-                    </p>
-                  </div>
-                )}
-                
-                {state.errors && state.errors.length > 0 && (
-                  <div className="bg-red-100 dark:bg-red-900/30 border border-red-500/30 rounded-lg p-4 text-center">
-                    <p className="text-red-800 dark:text-red-400 font-medium">
-                      ❌ There was an error submitting your application. Please try again.
-                    </p>
-                  </div>
-                )}
               </form>
             </div>
           </div>

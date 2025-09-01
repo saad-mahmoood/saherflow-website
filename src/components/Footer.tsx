@@ -160,12 +160,7 @@ const Footer: React.FC = () => {
               <p>&copy; 2025 Saher Flow Solutions. All rights reserved.</p>
               <p className="text-sm mt-1">Innovating flow measurement technology from Saudi Arabia for the world</p>
             </div>
-            
-            <div className="flex flex-wrap gap-6 text-sm text-gray-400">
-              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-white transition-colors">Cookie Policy</a>
-            </div>
+       
           </div>
           
           {/* Certifications and Location */}

@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
     { id: "/products", label: "Products", path: "/products" },
     { id: "/services", label: "Services", path: "/services" },
     { id: "/news", label: "News", path: "/news" },
-    { id: "/blogs", label: "Blog", path: "/blogs" },
+    { id: "/blogs", label: "Blogs", path: "/blogs" },
     { id: "/careers", label: "Careers", path: "/careers" },
   ]
 
