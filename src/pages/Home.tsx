@@ -121,7 +121,7 @@ className="w-8 h-8 object-contain"
 />
 ),
 title: "Real-Time Remote Monitoring",
-description: "There's no need to visit the well site or access the company's on-site servers, data can be synced with on-site servers or cloud based servers",
+description: "There's no need to visit the well site and the production data can be remotely monitored through securepn-site/cloud servers",
 color: "from-blue-500 to-cyan-600"
 },
 {
@@ -736,56 +736,72 @@ title={media.type === 'video' ? 'Video' : 'Image'}
 </div>
 </section>
 
-{/* Key Features Section */}
+{/* --- Key Advantages Section (mobile: title centered with icon) --- */}
 <section className="py-12 sm:py-16 md:py-24 bg-gray-50 dark:bg-gray-800">
-<div className="container mx-auto px-4 sm:px-6">
-<motion.div
-initial={{ opacity: 0, y: 20 }}
-whileInView={{ opacity: 1, y: 0 }}
-transition={{ duration: 0.6 }}
-viewport={{ once: true }}
-className="text-center mb-8 sm:mb-12 md:mb-16"
->
-<div className="inline-flex items-center gap-2 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm font-semibold mb-4 sm:mb-6">
-<Star size={14} className="sm:w-4 sm:h-4" />
-Key Advantages
-</div>
-<h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy-900 dark:text-white mb-4 sm:mb-6">
-Why Choose Saher Flow Solutions?
-</h2>
-<p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
-Revolutionary technology that transforms how the energy industry measures multiphase flow
-</p>
-</motion.div>
+  <div className="container mx-auto px-4 sm:px-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="text-center mb-8 sm:mb-12 md:mb-16"
+    >
+      <div className="inline-flex items-center gap-2 bg-yellow-500/10 text-yellow-600 dark:text-yellow-400 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm font-semibold mb-4 sm:mb-6">
+        <Star size={14} className="sm:w-4 sm:h-4" />
+        Key Advantages
+      </div>
 
-<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-{salientFeatures.map((feature, index) => (
-<motion.div
-key={index}
-initial={{ opacity: 0, y: 20 }}
-whileInView={{ opacity: 1, y: 0 }}
-transition={{ duration: 0.5, delay: index * 0.1 }}
-viewport={{ once: true }}
-className="group relative bg-white dark:bg-gray-700 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:transform hover:scale-105 overflow-hidden"
->
-<div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-navy-900 dark:text-white mb-4 sm:mb-6">
+        Why Choose Saher Flow Solutions?
+      </h2>
 
-<div className={`inline-flex p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${feature.color} text-white mb-4 sm:mb-6`}>
-{feature.icon}
-</div>
+      <p className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
+        Revolutionary technology that transforms how the energy industry measures multiphase flow
+      </p>
+    </motion.div>
 
-<h3 className="text-lg sm:text-xl font-bold text-navy-900 dark:text-white mb-3 sm:mb-4">
-{feature.title}
-</h3>
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      {salientFeatures.map((feature, idx) => (
+        <motion.div
+          key={idx}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: idx * 0.08 }}
+          viewport={{ once: true }}
+          className="group relative bg-white dark:bg-gray-700 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:transform hover:scale-105 overflow-hidden"
+        >
+          {/* subtle gradient overlay */}
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300 rounded-xl sm:rounded-2xl`}
+            aria-hidden="true"
+          />
 
-<p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm mb-4 line-clamp-3">
-{feature.description}
-</p>
-</motion.div>
-))}
-</div>
-</div>
+          {/* === MOBILE-CENTER FIX ===
+              items-center on small screens => vertical center with icon
+              lg:items-start on large screens => keep top-aligned when title wraps */}
+          <div className="flex items-center lg:items-start gap-4 mb-3 sm:mb-4">
+            <div
+              className={`flex-shrink-0 inline-flex p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-br ${feature.color} text-white`}
+              aria-hidden="true"
+            >
+              {feature.icon}
+            </div>
+
+            <h3 className="text-lg sm:text-xl font-bold text-navy-900 dark:text-white leading-tight min-w-0">
+              {feature.title}
+            </h3>
+          </div>
+
+          {/* description below the inline icon+title */}
+          <p className="text-gray-600 dark:text-gray-300 text-xs sm:text-sm mb-0 line-clamp-3">
+            {feature.description}
+          </p>
+        </motion.div>
+      ))}
+    </div>
+  </div>
 </section>
+
 
 {/* Industry Partnerships Section - Updated with Slider */}
 <section className="py-12 sm:py-16 md:py-24 bg-white dark:bg-gray-900">

@@ -5,7 +5,7 @@ import { Menu, X, Sun, Moon, Bell } from "lucide-react"
 
 // use your real blue & white SVG URLs here:
 const lightLogo = "https://res.cloudinary.com/drnak5yb2/image/upload/v1755589239/output-onlinepngtools_fnkcov.png"
-const darkLogo = "https://saherflow.com/wp-content/uploads/2021/06/Artboard-1-copy100.svg"
+const darkLogo = "https://res.cloudinary.com/drnak5yb2/image/upload/v1756798056/output-onlinepngtools_1_gybrdb.png"
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
     { id: "/products", label: "Products", path: "/products" },
     { id: "/services", label: "Services", path: "/services" },
     { id: "/news", label: "News", path: "/news" },
-    { id: "/blogs", label: "Blogs", path: "/blogs" },
+    // { id: "/blogs", label: "Blogs", path: "/blogs" },
     { id: "/careers", label: "Careers", path: "/careers" },
   ]
 
@@ -73,7 +73,7 @@ const Navbar: React.FC = () => {
               <img
                 src={isDark ? darkLogo : lightLogo}
                 alt="Saher Flow"
-                className={`w-auto transition-all duration-300 ${isDark ? "h-12" : "h-28"}`}
+                className={`w-auto transition-all duration-300 ${isDark ? "h-28" : "h-28"}`}
               />
             </Link>
 
