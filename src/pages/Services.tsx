@@ -16,7 +16,7 @@ const Services: React.FC = () => {
       details:
         "Whether it's a laminar or turbulent flow, we are here to guide you to the best measurement solution needed for your application. As an expert on multiphase flow measurements, we are well acquainted with various kinds of flow technologies including ultrasonics, magnetic resonance, differential pressure, Coriolis, vortex and clamp-on.",
       // kept your original Cloudinary/service image (you can change if needed)
-      image: 'https://res.cloudinary.com/drnak5yb2/image/upload/v1756373010/Saher_3G_MPFM_damfjy.png',
+      image: 'https://res.cloudinary.com/drnak5yb2/image/upload/v1754555207/Flow_p9rkop.png',
       fallbackImage:
         'https://images.pexels.com/photos/159298/gears-cogs-machine-machinery-159298.jpeg?auto=compress&cs=tinysrgb&w=800',
     },
