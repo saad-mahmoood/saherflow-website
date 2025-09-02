@@ -660,9 +660,24 @@ Smart
 <span className="block mt-2">Solutions</span>
 </h1>
 
-<h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-200 font-semibold mb-8 max-w-3xl">
-Patented DMOR Technology • Real-time Data • Minimum Calibration Requirement
-</h2>
+{/* Key Features with Colored Bullets */}
+<div className="flex flex-col sm:flex-row sm:flex-nowrap gap-4 sm:gap-6 items-start">
+  <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto flex-shrink-0">
+    <div className="w-3 h-3 bg-green-400 rounded-full flex-shrink-0" />
+    <span className="text-gray-300 font-medium sm:whitespace-nowrap">Patented DMOR Technology</span>
+  </div>
+
+  <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto flex-shrink-0">
+    <div className="w-3 h-3 bg-blue-400 rounded-full flex-shrink-0" />
+    <span className="text-gray-300 font-medium sm:whitespace-nowrap">Real-time Data</span>
+  </div>
+
+  <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto flex-shrink-0">
+    <div className="w-3 h-3 bg-purple-400 rounded-full flex-shrink-0" />
+    <span className="text-gray-300 font-medium sm:whitespace-nowrap">Minimum Calibration Requirement</span>
+  </div>
+</div>
+
 
 <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-10 leading-relaxed max-w-4xl">
 Transform your production with industry-leading multiphase flow meters.
