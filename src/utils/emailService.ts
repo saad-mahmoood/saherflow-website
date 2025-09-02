@@ -29,6 +29,7 @@ export class EmailService {
         department: formData.department,
         message: formData.message,
         phone: formData.phone || 'Not provided',
+        company_address: 'Saher Flow Solutions, Office # 2112, Second Floor, AL-OLAYAN Building 40, KAUST, Thuwal, Saudi Arabia.',
       };
 
       // Template parameters for user auto-reply

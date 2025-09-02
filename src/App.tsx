@@ -46,7 +46,8 @@ function App() {
                   {/* <Route path="/blogs" element={<Blogs />} /> */}
                   <Route path="/careers" element={<Careers />} />
                   <Route path="/contact" element={<Contact />} />
-                
+                  {/* Catch all other routes and redirect to home */}
+                  <Route path="*" element={<Home />} />
                 </Routes>
               </main>
               <Footer />

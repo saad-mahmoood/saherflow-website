@@ -182,7 +182,7 @@ const Contact: React.FC = () => {
                   {expandedFAQ === index && (
                     <div className="px-8 pb-6 border-t border-gray-200 dark:border-gray-600">
                       <div className="pt-6">
-                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                        <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base text-justify">
                           {faq.answer}
                         </p>
                       </div>
@@ -354,7 +354,7 @@ const Contact: React.FC = () => {
                     <div>
                       <h4 className="font-semibold text-navy-900 dark:text-white mb-1">Headquarters</h4>
                       <p className="text-gray-600 dark:text-gray-300">
-                        King Abdullah University of Science and Technology (KAUST) Building 1, Office 2204 Thuwal 23955, Saudi Arabia
+                        Saher Flow Solutions, Office # 2112, Second Floor, AL-OLAYAN Building 40, KAUST, Thuwal, Saudi Arabia.
                       </p>
                     </div>
                   </div>
