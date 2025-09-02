@@ -42,7 +42,7 @@ const Services: React.FC = () => {
     },
   ];
 
-  const pdfUrl = 'https://saherflow.com/wp-content/uploads/2025/02/SaherBrochure-Vertical-English_MAK.pdf';
+  const pdfUrl = '/2025 saher_services_brochure.pdf';
 
   // Preload PDF in background
   useEffect(() => {

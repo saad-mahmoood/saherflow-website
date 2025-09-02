@@ -56,7 +56,7 @@ const Products: React.FC = () => {
     }
   ];
 
-  const pdfUrl = 'https://saherflow.com/wp-content/uploads/2025/01/Saher-Products-Broucher-2025-01.pdf';
+  const pdfUrl = '/2025 Saher-Products-Broucher.pdf';
 
   // Preload PDF in background
   useEffect(() => {
