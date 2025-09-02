@@ -49,20 +49,6 @@ RewriteRule ^(.*)$ https://saherflow.com/$1 [R=301,L]
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Handle React Router
-# Only allow specific routes
-RewriteCond %{REQUEST_URI} ^/(products|services|news|careers|contact)/?$
-RewriteRule ^(.*)$ /index.html [L]
-
-# Redirect root to index
-RewriteCond %{REQUEST_URI} ^/$
-RewriteRule ^(.*)$ /index.html [L]
-
-# Redirect all other paths to home
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !^/(products|services|news|careers|contact)/?$
-RewriteRule ^(.*)$ / [R=301,L]
 
 # Custom error pages
 ErrorDocument 404 /404.html
