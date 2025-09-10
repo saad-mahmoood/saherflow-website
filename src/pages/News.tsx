@@ -483,7 +483,15 @@ const News: React.FC = () => {
         {/* Admin Panel */}
         
         {selectedArticle && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+            onClick={(e) => {
+              // Close modal when clicking on backdrop
+              if (e.target === e.currentTarget) {
+                setSelectedArticle(null);
+              }
+            }}
+          >
             <div className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="relative">
                 <img
@@ -496,7 +504,8 @@ const News: React.FC = () => {
                 
                 <button
                   onClick={() => setSelectedArticle(null)}
-                  className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white p-2 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-colors backdrop-blur-sm"
+                  className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white p-3 rounded-full hover:bg-white dark:hover:bg-gray-800 transition-all duration-200 backdrop-blur-sm shadow-lg hover:shadow-xl z-10"
+                  aria-label="Close article"
                 >
                   <X size={24} />
                 </button>
@@ -628,6 +637,8 @@ const News: React.FC = () => {
                     border-radius: 0.5rem;
                     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
                     margin: 2rem 0;
+                    max-width: 100%;
+                    height: auto;
                   }
                   .prose a {
                     color: #1a3a5c;
@@ -639,10 +650,24 @@ const News: React.FC = () => {
                   .prose a:hover {
                     color: #ffd500;
                   }
+                  .prose strong {
+                    font-weight: 700;
+                    color: #1a3a5c;
+                  }
+                  .prose em {
+                    font-style: italic;
+                    color: #374151;
+                  }
                   .dark .prose h1,
                   .dark .prose h2,
                   .dark .prose h3 {
                     color: white !important;
+                  }
+                  .dark .prose strong {
+                    color: #ffd500 !important;
+                  }
+                  .dark .prose em {
+                    color: #d1d5db !important;
                   }
                   .dark .prose blockquote {
                     background: #374151;
@@ -679,6 +704,16 @@ const News: React.FC = () => {
                   <div className="text-sm text-gray-500 dark:text-gray-400">
                     {Math.ceil(selectedArticle.content.length / 1000)} minute read
                   </div>
+                </div>
+                
+                {/* Close Button at Bottom for Better UX */}
+                <div className="flex justify-center pt-6">
+                  <button
+                    onClick={() => setSelectedArticle(null)}
+                    className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+                  >
+                    Close Article
+                  </button>
                 </div>
               </div>
             </div>
