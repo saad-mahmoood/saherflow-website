@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-4 space-y-6">
             <div className="flex items-center space-x-3 mb-6">
               <img 
-                src="https://saherflow.com/wp-content/uploads/2021/06/Artboard-1-copy100.svg"
+                src="https://res.cloudinary.com/drnak5yb2/image/upload/v1756278804/light_mode_logo_saher_btbdos.svg"
                 alt="Saher Flow Solutions"
                 className="h-12 w-auto"
               />
